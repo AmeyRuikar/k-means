@@ -41,7 +41,11 @@ Released under the MIT license: http://jsbin.mit-license.org
 	<p>K-means demonstration</p> 
 	<hr>
 	<br>
-        <p id="info">To select points; cLick inside the blue rectangle.</p> 
+        <p id="info">To select points; cLick inside the blue rectangle.</p>
+         
+    <button onclick="clear_all()" style="margin: 30px; position: relative; float:left;  ">clear canvas</button> 
+     
+     <br>
 	<canvas id="canvas1"  >
 	</canvas>
 	<br>
@@ -123,6 +127,14 @@ $(document).ready(function(){
 
 	});
 });
+
+function clear_all(){
+
+     i = 0;
+     context.clearRect(0 , 0, canvas.width, canvas.height);
+      document.getElementById('info').innerHTML = "Start Selection";
+
+}
 
 </script>
 
