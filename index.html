@@ -60,7 +60,7 @@ var boundary;
 var pts= new Array(100);
 var return_msg;
 // 6 colors.
-//var	colors ={ "#FF0000", "#0000FF", "#00CC00", "#00FFFF", "#CC66FF", "#FFFF00"};
+var	colors =[ "#FF0000", "#0000FF", "#00CC00", "#00FFFF", "#CC66FF", "#FFFF00"];
 var j;
 
 
@@ -111,14 +111,14 @@ $(document).ready(function(){
 					
 					returned_pts = jQuery.parseJSON(msg);
 					alert('x: '+ returned_pts[0].x +  'y: '+ returned_pts[0].y );
-					/*
+					
 					for(j = 0; j< i-1; j++){
 					
 						context.fillStyle = colors[returned_pts[j].color];
        					context.strokeStyle = colors[returned_pts[j].color];
        					context.strokeRect(returned_pts[j].x/1.69 ,returned_pts[j].y/3.34, 2,2);
 					}
-					*/
+					
 				});
 
 	});
