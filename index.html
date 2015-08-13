@@ -13,11 +13,11 @@ Released under the MIT license: http://jsbin.mit-license.org
 	<title>K-means demo</title>
 	<style id="jsbin-css">
 		#canvas1 {
-			width: 1000px;
-			height: 600px;
-			margin: 30px;
+			width:  500px;
+			height: 500px;
+
 			border: 2px solid red;
-			padding: 0px;		
+
 		}
 		#calculate{
 			margin:30px;
@@ -56,9 +56,10 @@ var x, y;
 var mouse_cor;
 var i = 0;
 var msg;
-var r =90, g =78, b = 150, a = 255;
 var boundary;
 var pts= new Array(100);
+
+
 function point(x, y, color, ismean){
     this.x = x;
     this.y = y;
@@ -69,6 +70,7 @@ function point(x, y, color, ismean){
 window.onload = function init(){
     canvas = document.getElementById("canvas1");
     context = canvas.getContext('2d');	
+    
     canvas.addEventListener('mousemove', function(event1){
                           boundary = canvas.getBoundingClientRect();
                           x = event1.clientX - boundary.left;
