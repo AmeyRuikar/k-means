@@ -57,6 +57,7 @@ var mouse_cor;
 var i = 0;
 var msg;
 var r =90, g =78, b = 150, a = 255;
+var boundary;
 var pts= new Array(100);
 function point(x, y, color, ismean){
     this.x = x;
@@ -69,14 +70,15 @@ window.onload = function init(){
     canvas = document.getElementById("canvas1");
     context = canvas.getContext('2d');	
     canvas.addEventListener('mousemove', function(event1){
-                          x = event1.clientX;
-                          y = event1.clientY;
+                          boundary = canvas.getBoundingClientRect();
+                          x = event1.clientX - boundary.left;
+                          y = event1.clientY - boundary.top;
                           }, false);
    canvas.addEventListener('mousedown', function(event1){
 	                  pts[i] = new point(x ,y);
                           msg = 'Point selected - '+ i +' at ' + x + ', '+ y;
                           document.getElementById('info').innerHTML = msg;
-                          context.beginPath();
+                          context.strokeRect(x/1.69 ,y/3.34, 2,2);
                           i++;
                           }, false);
 };
