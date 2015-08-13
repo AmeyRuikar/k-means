@@ -58,6 +58,11 @@ var i = 0;
 var msg2;
 var boundary;
 var pts= new Array(100);
+var return_msg;
+// 6 colors.
+var	colors ={ "#FF0000", "#0000FF", "#00CC00", "#00FFFF", "#CC66FF", "#FFFF00"};
+var j;
+
 
 var	returned_pts = new Array(100);
 
@@ -91,10 +96,6 @@ window.onload = function init(){
 
 
 //THIS IS THE JQUERY PART WHERE I MAKE CALLS TO PHP SERVER
-var return_msg;
-// 6 colors.
-var	colors ={ "#FF0000", "#0000FF", "#00CC00", "#00FFFF", "#CC66FF", "#FFFF00"};
-var j;
 
 $(document).ready(function(){
 	alert("Document ready!");
