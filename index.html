@@ -51,6 +51,10 @@ Released under the MIT license: http://jsbin.mit-license.org
 	<br>
 	<input type="button" id="calculate" value="Let's Go.">
 	</input>
+	
+     <hr/>
+     <p> | Developed by Amey Ruikar and Anirudh Sudarshan | 
+     <a href="https://github.com/AmeyRuikar/k-means">GITHUB</a> |</p>
 </body>
 
 <script id="jsbin-javascript">
@@ -104,7 +108,7 @@ window.onload = function init(){
 $(document).ready(function(){
 	//alert("Document ready!");
 	$('#calculate').click(function(){
-				alert("Clicked!");
+				//alert("Clicked!");
 				var stringpoints = JSON.stringify(pts);
 				var stringnumberofpoints = JSON.stringify(i);
 				var temp = {numberofpoints : stringnumberofpoints , points : stringpoints};
@@ -132,8 +136,9 @@ function clear_all(){
 
      i = 0;
      context.clearRect(0 , 0, canvas.width, canvas.height);
-      document.getElementById('info').innerHTML = "Start Selection";
-
+     document.getElementById('info').innerHTML = "Start Selection";
+     context.fillStyle = "#000000";
+     context.strokeStyle = "#000000";
 }
 
 </script>
