@@ -98,7 +98,7 @@ window.onload = function init(){
 //THIS IS THE JQUERY PART WHERE I MAKE CALLS TO PHP SERVER
 
 $(document).ready(function(){
-	alert("Document ready!");
+	//alert("Document ready!");
 	$('#calculate').click(function(){
 				alert("Clicked!");
 				var stringpoints = JSON.stringify(pts);
@@ -107,12 +107,12 @@ $(document).ready(function(){
 				
 				$.post('calculate.php',temp,function(msg){			
 					return_msg = msg;
-					alert(return_msg);
+					//alert(return_msg);
 					
 					returned_pts = jQuery.parseJSON(msg);
-					alert('x: '+ returned_pts[0].x +  'y: '+ returned_pts[0].y );
+					//alert('x: '+ returned_pts[0].x +  'y: '+ returned_pts[0].y );
 					
-					for(j = 0; j< i-1; j++){
+					for(j = 0; j< i; j++){
 					
 						context.fillStyle = colors[returned_pts[j].color];
        					context.strokeStyle = colors[returned_pts[j].color];
