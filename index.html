@@ -41,7 +41,7 @@ Released under the MIT license: http://jsbin.mit-license.org
 	<p>K-means demonstration</p> 
 	<hr>
 	<br>
-        <p id="info">To select points cLick inside the red rectangle.</p> 
+        <p id="info">To select points; cLick inside the blue rectangle.</p> 
 	<canvas id="canvas1"  >
 	</canvas>
 	<br>
@@ -55,9 +55,11 @@ var context;
 var x, y;
 var mouse_cor;
 var i = 0;
-var msg;
+var msg2;
 var boundary;
 var pts= new Array(100);
+
+var	returned_pts = new Array(100);
 
 
 function point(x, y, color, ismean){
@@ -76,10 +78,11 @@ window.onload = function init(){
                           x = event1.clientX - boundary.left;
                           y = event1.clientY - boundary.top;
                           }, false);
+                          
    canvas.addEventListener('mousedown', function(event1){
 	                  pts[i] = new point(x ,y);
-                          msg = 'Point selected - '+ i +' at ' + x + ', '+ y;
-                          document.getElementById('info').innerHTML = msg;
+                          msg2 = 'Point selected - '+ i +' at ' + x + ', '+ y;
+                          document.getElementById('info').innerHTML = msg2;
                           context.strokeRect(x/1.69 ,y/3.34, 2,2);
                           i++;
                           }, false);
@@ -88,6 +91,7 @@ window.onload = function init(){
 
 
 //THIS IS THE JQUERY PART WHERE I MAKE CALLS TO PHP SERVER
+var return_msg;
 
 $(document).ready(function(){
 	alert("Document ready!");
@@ -96,12 +100,19 @@ $(document).ready(function(){
 				var stringpoints = JSON.stringify(pts);
 				var stringnumberofpoints = JSON.stringify(i);
 				var temp = {numberofpoints : stringnumberofpoints , points : stringpoints};
+				
 				$.post('calculate.php',temp,function(msg){			
-					alert(msg);
+					return_msg = msg;
+					alert(return_msg);
+					
+					returned_pts = jQuery.parseJSON(msg);
+					alert('x: '+ returned_pts[0].x +  'y: '+ returned_pts[0].y );
+					
 				});
 
 	});
 });
+
 </script>
 
 
