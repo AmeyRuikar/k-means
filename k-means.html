@@ -11,190 +11,95 @@ Released under the MIT license: http://jsbin.mit-license.org
 <html>
 	<head>
 	<title>K-means demo</title>
-	
 	<style id="jsbin-css">
-	
-
-
-
-		
-
 		#canvas1 {
-
 			width: 1000px;
-
 			height: 600px;
-
 			margin: 30px;
-
 			border: 2px solid red;
-
 			padding: 0px;		
-
 		}
-
-		
-
 		#calculate{
-
-		
-
 			margin:30px;
-
-		
-
 		}
-
-		
-
-  
-
 #info{
-
-  
-
   size: 1.2em;
-
   margin: 30px;
-
 }
+
+
 </style>
+
+<!-- Including header for JQUERY -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
 </head>
 	
 	
-	<body>
+<body>
 	<hr>
-	<p>K-means demonstration</p>
+	<p>K-means demonstration</p> 
 	<hr>
 	<br>
-	
-     <p id="info">To select points cLick inside the red rectangle.</p> 
-      
+        <p id="info">To select points cLick inside the red rectangle.</p> 
 	<canvas id="canvas1"  >
 	</canvas>
-	
 	<br>
-	<input type="button" id="calculate" value="Let's Go." onclick="">
+	<input type="button" id="calculate" value="Let's Go.">
 	</input>
-	
+</body>
 
-	
-	
-	
-	
-	
-	<script id="jsbin-javascript">
+<script id="jsbin-javascript">
 var canvas;
-
 var context;
-
 var x, y;
-
 var mouse_cor;
-
 var i = 0;
-
 var msg;
-
-
-
 var r =90, g =78, b = 150, a = 255;
-
-
-
 var pts= new Array(100);
-
-
-
-
-
-function point(x, y){
-
-  
-
+function point(x, y, color, ismean){
     this.x = x;
-
     this.y = y;
-
-  
-
+    this.color = -1;
 }
 
-
-
-
-
+//THIS PART IS FOR GETTING THE POINTS AND ECHOING THEM ON SCREEN
 window.onload = function init(){
-
-  
-
     canvas = document.getElementById("canvas1");
-
-  
-
-    context = canvas.getContext('2d');
-
- 
-
-  
-
-  canvas.addEventListener('mousemove', function(event1){
-
-                         
-
-                       //   mouse_cor = getMousePos(canvas, event1);
-
+    context = canvas.getContext('2d');	
+    canvas.addEventListener('mousemove', function(event1){
                           x = event1.clientX;
-
                           y = event1.clientY;
-
-                    
-
                           }, false);
-
-  
-
-    
-
    canvas.addEventListener('mousedown', function(event1){
-
-         
-
-     
-
-                          pts[i] = new point(x ,y);
-
-                           msg = 'Point selected - '+ i +' at ' + x + ', '+ y;
-
-                           document.getElementById('info').innerHTML = msg;
-
-                             
-
-                            context.beginPath();
-
-       
-
-                           i++;
-
-             
-
-                          
-
-                           }, false);
-
-  
-
-  
-
+	                  pts[i] = new point(x ,y);
+                          msg = 'Point selected - '+ i +' at ' + x + ', '+ y;
+                          document.getElementById('info').innerHTML = msg;
+                          context.beginPath();
+                          i++;
+                          }, false);
 };
 
 
 
+//THIS IS THE JQUERY PART WHERE I MAKE CALLS TO PHP SERVER
 
+$(document).ready(function(){
+	alert("Document ready!");
+	$('#calculate').click(function(){
+				alert("Clicked!");
+				var stringpoints = JSON.stringify(pts);
+				var stringnumberofpoints = JSON.stringify(i);
+				var temp = {numberofpoints : stringnumberofpoints , points : stringpoints};
+				$.post('calculate.php',temp,function(msg){			
+					alert(msg);
+				});
 
-
+	});
+});
 </script>
-</body>
+
 
 
 </html>
