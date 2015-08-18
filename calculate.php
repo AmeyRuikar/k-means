@@ -7,13 +7,15 @@
 	
 	if(isset($_POST['points']) and $_POST['numberofpoints']){
 		$numberofpoints = intval($_POST['numberofpoints']);
-		$points = json_decode($_POST['points'],true);	
-		
-
+                $stringJSON = get_magic_quotes_gpc() ? stripslashes($_POST['points']) : $_POST['points'];
+		$points = json_decode($stringJSON,true);
+                	
+		//echo $numberofpoints;
+                //echo $points;
 		//Actual processing.
 
 		//In first version, only 3 clusters.
-		$k=3;
+		$k=6;
 		
 		//Need validation for when number of points less than 3 ..... 
 
@@ -85,9 +87,10 @@
 						$n=$n+1;
 					}
 				}
-						
-				$tempx = $tempx / $n;
-				$tempy = $tempy / $n;
+				if( $n != 0) {	
+				        $tempx = $tempx / $n;
+				        $tempy = $tempy / $n;
+                                }
 
 				//Assign new means 
 				$means[$i]->x = $tempx;
@@ -101,3 +104,4 @@
 		echo "Did not receive valid data!";
 	}
 ?>
+	
