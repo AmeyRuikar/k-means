@@ -51,6 +51,10 @@ Released under the MIT license: http://jsbin.mit-license.org
 	<br>
 	<input type="button" id="calculate" value="Let's Go.">
 	</input>
+	
+     <hr/>
+     <p> | Developed by Amey Ruikar and Anirudh Sudarshan | 
+     <a href="https://github.com/AmeyRuikar/k-means">GITHUB</a> |</p>
 </body>
 
 <script id="jsbin-javascript">
@@ -90,7 +94,7 @@ window.onload = function init(){
                           
    canvas.addEventListener('mousedown', function(event1){
 	                  pts[i] = new point(x ,y);
-                          msg2 = 'Point selected - '+ i +' at ' + x + ', '+ y;
+                          msg2 = 'Point selected - '+ (i+1) +' at ' + x + ', '+ y;
                           document.getElementById('info').innerHTML = msg2;
                           context.strokeRect(x/1.69 ,y/3.34, 2,2);
                           i++;
@@ -102,26 +106,28 @@ window.onload = function init(){
 //THIS IS THE JQUERY PART WHERE I MAKE CALLS TO PHP SERVER
 
 $(document).ready(function(){
-	alert("Document ready!");
+	//alert("Document ready!");
 	$('#calculate').click(function(){
-				alert("Clicked!");
+				//alert("Clicked!");
 				var stringpoints = JSON.stringify(pts);
+                                //alert(stringpoints);
 				var stringnumberofpoints = JSON.stringify(i);
 				var temp = {numberofpoints : stringnumberofpoints , points : stringpoints};
 				
-				$.post('calculate.php',temp,function(msg){			
+				$.post('http://kmeansdemo.site40.net/calculate.php',temp,function(msg){			
 					return_msg = msg;
-					alert(return_msg);
+					//alert(return_msg);
 					
 					returned_pts = jQuery.parseJSON(msg);
-					alert('x: '+ returned_pts[0].x +  'y: '+ returned_pts[0].y );
+					//alert('x: '+ returned_pts[0].x +  'y: '+ returned_pts[0].y );
 					
-					for(j = 0; j< i-1; j++){
+					for(j = 0; j< i; j++){
 					
 						context.fillStyle = colors[returned_pts[j].color];
        					context.strokeStyle = colors[returned_pts[j].color];
        					context.strokeRect(returned_pts[j].x/1.69 ,returned_pts[j].y/3.34, 2,2);
 					}
+					document.getElementById('info').innerHTML = "Points with the same color are in one cluster";
 					
 				});
 
@@ -132,9 +138,21 @@ function clear_all(){
 
      i = 0;
      context.clearRect(0 , 0, canvas.width, canvas.height);
-      document.getElementById('info').innerHTML = "Start Selection";
-
+     document.getElementById('info').innerHTML = "Start Selection";
+     context.fillStyle = "#000000";
+     context.strokeStyle = "#000000";
 }
+//analytics
+
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-66321800-1', 'auto');
+  ga('send', 'pageview');
+
+
 
 </script>
 
