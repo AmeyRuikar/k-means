@@ -127,6 +127,7 @@ $(document).ready(function(){
        					context.strokeStyle = colors[returned_pts[j].color];
        					context.strokeRect(returned_pts[j].x/1.69 ,returned_pts[j].y/3.34, 2,2);
 					}
+					document.getElementById('info').innerHTML = "Points with the same color are in one cluster";
 					
 				});
 
