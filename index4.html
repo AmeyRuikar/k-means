@@ -12,6 +12,9 @@
     <link rel="icon" href="favicon.ico">
     
     <link rel="stylesheet" href="font-awesome-4.3.0/css/font-awesome.min.css">
+    <script src="js/bootstrap.min.js"></script>
+   
+
 
 
     <title>K-means Clustering</title>
@@ -78,9 +81,16 @@
 	<br>
 	<br>
 	
-  	<p><a class="btn btn-primary" href="#" role="button" id="calculate">Let's Go &raquo;</a></p>
+  	<p><a class="btn btn-primary" role="button" id="calculate">Let's Go &raquo;</a></p>
   
   	</div>
+  	   <!-- modal  -->
+  	   
+  	  <!-- Large modal -->
+
+
+  
+
   	<hr>
       <!-- Site footer -->
       <footer class="footer">
@@ -89,8 +99,13 @@
 
     </div> <!-- /container -->
 
+    
+
 	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-   		<script id="jsbin-javascript">
+	  
+	  
+	  
+   	<script id="jsbin-javascript">
 var canvas;
 var context;
 var x, y;
@@ -105,6 +120,7 @@ var return_msg;
 var	colors =[ "#FF0000", "#0000FF", "#00CC00", "#00FFFF", "#CC66FF", "#FFFF00"];
 var j;
 
+var flag_k = 0;
 
 var	returned_pts = new Array(100);
 
@@ -140,13 +156,37 @@ window.onload = function init(){
 //THIS IS THE JQUERY PART WHERE I MAKE CALLS TO PHP SERVER
 
 $(document).ready(function(){
-	//alert("Document ready!");
+	alert("Document ready!");
 	$('#calculate').click(function(){
 				//alert("Clicked!");
 				//K accepted from user
-				k = prompt("Enter number of clusters - K ");
+				
+					flag_k = 1;
+		
+		
+					while(flag_k == 1){
+					
+						flag_k = 0;
+					
+						k = prompt("Enter number of clusters - K ");
+					
+						alert(k+"  i:"+i)
+				
+						if( k == 0 || K >=(i-1)){
+				
+							alert("Error: number of clusters is zero");
+							
+							flag_k = 1;
+				
+						}
+				
+					
+				
+					}
 				
 				
+					alert("out");
+				//end of changes
 				var stringpoints = JSON.stringify(pts);
                                 //alert(stringpoints);
 				var stringnumberofpoints = JSON.stringify(i);
