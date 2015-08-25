@@ -1,0 +1,165 @@
+<!DOCTYPE HTML>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2015 by ASR (http://jsbin.com/nexore/5/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html>
+	<head>
+	<title>K-means demo</title>
+	<style id="jsbin-css">
+		#canvas1 {
+			width:  500px;
+			height: 500px;
+
+			border: 2px solid blue;
+
+		}
+		#calculate{
+			margin:30px;
+		}
+#info{
+  size: 1.2em;
+  margin: 30px;
+}
+
+
+</style>
+
+<!-- Including header for JQUERY -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+</head>
+	
+	
+<body>
+	<hr>
+	<p>K-means demonstration</p> 
+	<hr>
+	<br>
+        <p id="info">To select points; cLick inside the blue rectangle.</p>
+         
+    <button onclick="clear_all()" style="margin: 30px; position: relative; float:left;  ">clear canvas</button> 
+     
+     <br>
+	<canvas id="canvas1"  >
+	</canvas>
+	<br>
+	<input type="button" id="calculate" value="Let's Go.">
+	</input>
+	
+     <hr/>
+     <p> | Developed by Amey Ruikar and Anirudh Sudarshan | 
+     <a href="https://github.com/AmeyRuikar/k-means">GITHUB</a> |</p>
+</body>
+
+<script id="jsbin-javascript">
+var canvas;
+var context;
+var x, y;
+var mouse_cor;
+var i = 0;
+var msg2;
+var boundary;
+var pts= new Array(100);
+var return_msg;
+// 6 colors.
+var	colors =[ "#FF0000", "#0000FF", "#00CC00", "#00FFFF", "#CC66FF", "#FFFF00"];
+var j;
+
+
+var	returned_pts = new Array(100);
+
+
+function point(x, y, color, ismean){
+    this.x = x;
+    this.y = y;
+    this.color = -1;
+}
+
+//THIS PART IS FOR GETTING THE POINTS AND ECHOING THEM ON SCREEN
+window.onload = function init(){
+    canvas = document.getElementById("canvas1");
+    context = canvas.getContext('2d');	
+    
+    canvas.addEventListener('mousemove', function(event1){
+                          boundary = canvas.getBoundingClientRect();
+                          x = event1.clientX - boundary.left;
+                          y = event1.clientY - boundary.top;
+                          }, false);
+                          
+   canvas.addEventListener('mousedown', function(event1){
+	                  pts[i] = new point(x ,y);
+                          msg2 = 'Point selected - '+ (i+1) +' at ' + x + ', '+ y;
+                          document.getElementById('info').innerHTML = msg2;
+                          context.strokeRect(x/1.69 ,y/3.34, 2,2);
+                          i++;
+                          }, false);
+};
+
+
+
+//THIS IS THE JQUERY PART WHERE I MAKE CALLS TO PHP SERVER
+
+$(document).ready(function(){
+	//alert("Document ready!");
+	$('#calculate').click(function(){
+				//alert("Clicked!");
+				var stringpoints = JSON.stringify(pts);
+                                //alert(stringpoints);
+				var stringnumberofpoints = JSON.stringify(i);
+				var k=5;
+				var kk= JSON.stringify(k);
+				var temp = {numberOfPoints : stringnumberofpoints , points : stringpoints, numberOfClusters : kk};
+				$.post('calculate2.php',temp,function(msg){			
+					return_msg = msg;
+					alert(msg);
+					returned_pts = jQuery.parseJSON(msg);
+					if(returned_pts['errorcode']){
+						alert("Something wrong!");
+					}
+					//alert('x: '+ returned_pts[0].x +  'y: '+ returned_pts[0].y );
+					else{
+						for(j = 0; j< i; j++){
+							context.fillStyle = colors[returned_pts[j].color];
+
+	       						context.strokeStyle = colors[returned_pts[j].color];
+	       						context.strokeRect(returned_pts[j].x/1.69 ,returned_pts[j].y/3.34, 2,2);
+						}
+						
+					}
+					
+				});
+
+	});
+});
+
+function clear_all(){
+
+     i = 0;
+     context.clearRect(0 , 0, canvas.width, canvas.height);
+     document.getElementById('info').innerHTML = "Start Selection";
+     context.fillStyle = "#000000";
+     context.strokeStyle = "#000000";
+}
+//analytics
+
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-66321800-1', 'auto');
+  ga('send', 'pageview');
+
+
+
+</script>
+
+
+
+</html>

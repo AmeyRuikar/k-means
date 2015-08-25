@@ -1,63 +1,111 @@
-<!DOCTYPE HTML>
-<!--
-Created using JS Bin
-http://jsbin.com
 
-Copyright (c) 2015 by ASR (http://jsbin.com/nexore/5/edit)
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-Released under the MIT license: http://jsbin.mit-license.org
--->
-<meta name="robots" content="noindex">
-<html>
-	<head>
-	<title>K-means demo</title>
-	<style id="jsbin-css">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="favicon.ico">
+    
+    <link rel="stylesheet" href="font-awesome-4.3.0/css/font-awesome.min.css">
+    <script src="js/bootstrap.min.js"></script>
+   
+
+
+
+    <title>K-means Clustering</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="justified-nav.css" rel="stylesheet">
+    <![endif]-->
+    
+    <style id="jsbin-css">
+   
+   		#side{
+   		display: inline;
+   		float: right;
+   		width:50%;
+   		
+   		}
+   		
+
 		#canvas1 {
 			width:  500px;
 			height: 500px;
-
+			display: inline;
 			border: 2px solid blue;
+			width: 45%;
 
 		}
-		#calculate{
-			margin:30px;
-		}
+	
 #info{
-  size: 1.2em;
-  margin: 30px;
+  size: 1.6em;
 }
 
 
 </style>
 
-<!-- Including header for JQUERY -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  </head>
 
-</head>
-	
-	
-<body>
-	<hr>
-	<p>K-means demonstration</p> 
-	<hr>
-	<br>
-        <p id="info">To select points; cLick inside the blue rectangle.</p>
-         
-    <button onclick="clear_all()" style="margin: 30px; position: relative; float:left;  ">clear canvas</button> 
+  <body>
+
+    <div class="container">
+
+      <!-- The justified navigation menu is meant for single line per list item.
+           Multiple lines will require custom code not provided by Bootstrap. -->
+      
+      <div class="masthead">
+        <h3 class="text-muted" style="font-size: 4em;">K - means Demo.</h3>
+     </div>
+             <hr>
+<p>k-means clustering is a method of vector quantization, originally from signal processing, that is popular for cluster analysis in data mining. k-means clustering aims to partition n observations into k clusters in which each observation belongs to the cluster with the nearest mean, serving as a prototype of the cluster. This results in a partitioning of the data space into Voronoi cells.<a target="_blank" href="https://en.wikipedia.org/wiki/K-means_clustering"> Read More</a></p>
+      
+      
+<hr>
+      <!-- canvas and buttons -->
+      <p id="info"> Start selecting points on the canvas.</p>
      
-     <br>
-	<canvas id="canvas1"  >
+      <canvas id="canvas1"  >
 	</canvas>
-	<br>
-	<input type="button" id="calculate" value="Let's Go.">
-	</input>
 	
-     <hr/>
-     <p> | Developed by Amey Ruikar and Anirudh Sudarshan | 
-     <a href="https://github.com/AmeyRuikar/k-means">GITHUB</a> |</p>
-</body>
+    <div id="side">
+     
+   	<p><a class="btn btn-primary" href="#" role="button" id = "clear" onClick="clear_all();">Clear Canvas &raquo;</a></p>    
+	<br>
+	<br>
+	
+  	<p><a class="btn btn-primary" role="button" id="calculate">Let's Go &raquo;</a></p>
+  
+  	</div>
+  	   <!-- modal  -->
+  	   
+  	  <!-- Large modal -->
 
-<script id="jsbin-javascript">
+
+  
+
+  	<hr>
+      <!-- Site footer -->
+      <footer class="footer">
+        <p>&copy; 2015 Amey Ruikar and Anirudh Sudarshan, view code on <a target="_blank" href="https://github.com/AmeyRuikar/k-means"><i class="fa fa-github-square fa-3x"></i></a> </p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    
+
+	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	  
+	  
+	  
+   	<script id="jsbin-javascript">
 var canvas;
 var context;
 var x, y;
@@ -65,12 +113,14 @@ var mouse_cor;
 var i = 0;
 var msg2;
 var boundary;
+
 var pts= new Array(100);
 var return_msg;
-// 6 colors.
-var	colors =[ "#FF0000", "#0000FF", "#00CC00", "#00FFFF", "#CC66FF", "#FFFF00"];
+// 9 colors.
+var	colors =[ "#FF0000", "#0000FF", "#00CC00", "#00FFFF", "#CC66FF", "#FF1110" ,"#111111", "#055555", "#00CCFF"];
 var j;
 
+var flag_k = 0;
 
 var	returned_pts = new Array(100);
 
@@ -109,29 +159,66 @@ $(document).ready(function(){
 	//alert("Document ready!");
 	$('#calculate').click(function(){
 				//alert("Clicked!");
+				//K accepted from user
+				
+					flag_k = 1;
+		
+					var k;
+					while(flag_k == 1){
+					
+						flag_k = 0;
+					
+						k = prompt("Enter number of clusters - K ");
+					
+						//alert(k+"  i:"+i)
+				
+						if( k == 0 ){
+				
+							alert("Error: Number of clusters cannot be zero!");
+							
+							flag_k = 1;
+				
+						}
+				
+						if(k > i){
+							alert("Error: Number of clusters cannot be more than number of points!");
+							
+							flag_k = 1;
+						}
+
+						if(k > 9){
+							alert("Error: We don't have more than 9 colors!");
+							
+							flag_k = 1;
+						}
+				
+				
+					}
+				
+				
+				
+				//end of changes
 				var stringpoints = JSON.stringify(pts);
                                 //alert(stringpoints);
 				var stringnumberofpoints = JSON.stringify(i);
-				var k=5;
-				var kk= JSON.stringify(k);
+				k=parseInt(k);
+				var kk=JSON.stringify(k);
 				var temp = {numberOfPoints : stringnumberofpoints , points : stringpoints, numberOfClusters : kk};
+				//alert(temp['numberOfClusters']);
 				$.post('calculate2.php',temp,function(msg){			
 					return_msg = msg;
-					alert(msg);
+					//alert(return_msg);
+					
 					returned_pts = jQuery.parseJSON(msg);
-					if(returned_pts['errorcode']){
-						alert("Something wrong!");
-					}
 					//alert('x: '+ returned_pts[0].x +  'y: '+ returned_pts[0].y );
-					else{
-						for(j = 0; j< i; j++){
-							context.fillStyle = colors[returned_pts[j].color];
-
-	       						context.strokeStyle = colors[returned_pts[j].color];
-	       						context.strokeRect(returned_pts[j].x/1.69 ,returned_pts[j].y/3.34, 2,2);
-						}
-						
+					//alert(returned_pts['n'] + " " + returned_pts['k']);
+					for(j = 0; j< i; j++){
+					
+						context.fillStyle = colors[returned_pts[j].color];
+       						context.strokeStyle = colors[returned_pts[j].color];
+       						context.strokeRect(returned_pts[j].x/1.69 ,returned_pts[j].y/3.34, 2,2);
 					}
+					document.getElementById('info').innerHTML = "Points with the same color are in one cluster";
 					
 				});
 
@@ -160,6 +247,5 @@ function clear_all(){
 
 </script>
 
-
-
+  </body>
 </html>
