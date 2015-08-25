@@ -174,24 +174,17 @@ $(document).ready(function(){
 				
 						if( k == 0 ){
 				
-							alert("Error: Number of clusters cannot be zero!");
+							alert("Error: number of clusters is zero");
 							
 							flag_k = 1;
 				
 						}
 				
 						if(k > i){
-							alert("Error: Number of clusters cannot be more than number of points!");
+							alert("Error: number of clusters is more!");
 							
 							flag_k = 1;
 						}
-
-						if(k > 9){
-							alert("Error: We don't have more than 9 colors!");
-							
-							flag_k = 1;
-						}
-				
 				
 					}
 				

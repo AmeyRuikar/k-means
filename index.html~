@@ -124,7 +124,8 @@ $(document).ready(function(){
 					}
 					//alert('x: '+ returned_pts[0].x +  'y: '+ returned_pts[0].y );
 					else{
-						for(j = 0; j< i; j++){
+						alert(returned_pts['condition']);
+						for(j = 0; j< i+k; j++){
 							context.fillStyle = colors[returned_pts[j].color];
 
 	       						context.strokeStyle = colors[returned_pts[j].color];

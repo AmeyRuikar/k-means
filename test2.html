@@ -1,0 +1,112 @@
+<!DOCTYPE HTML>
+<!--
+Created using JS Bin
+http://jsbin.com
+Copyright (c) 2015 by ASR (http://jsbin.com/kezalu/17/edit)
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html>
+	<head>
+	<title>K-means demo</title>
+	
+	<style id="jsbin-css">
+	
+		
+		#canvas1 {
+			width:  500px;
+			height: 500px;
+			border: 2px solid blue;	
+		}
+		
+		#calculate{
+		
+			margin:30px;
+		
+		}
+		
+  
+#info{
+  
+  size: 1.2em;
+  margin: 30px;
+}
+</style>
+</head>
+	
+	
+	<body>
+	<hr>
+	<p>Click Points on the canvas</p>
+	<hr>
+	<br>
+	
+     <p id="info">select</p> 
+      
+	<canvas id="canvas1"  >
+	</canvas>
+	
+	<br>
+	<input type="button" id="calculate" value="Let's Go." onclick="">
+	</input>
+	
+
+	
+	
+	
+	
+	
+	<script id="jsbin-javascript">
+var canvas;
+var context;
+var x, y;
+var mouse_cor;
+var i = 0;
+var msg;
+var boundary;
+var pts= new Array(100);
+function point(x, y){
+  
+    this.x = x;
+    this.y = y;
+  
+}
+window.onload = function init(){
+  
+    canvas = document.getElementById("canvas1");
+  
+    context = canvas.getContext('2d');
+ 
+   context.strokeRect(50,50, 50, 50);
+ 
+  
+  canvas.addEventListener('mousemove', function(event1){
+                         
+                       //   mouse_cor = getMousePos(canvas, event1);
+                          boundary = canvas.getBoundingClientRect();
+                          x = event1.clientX - boundary.left;
+                          y = event1.clientY - boundary.top;
+                    
+                          }, false);
+  
+    
+   canvas.addEventListener('mousedown', function(event1){
+         
+     
+                          pts[i] = new point(x ,y);
+                           msg = 'Point selected - '+ i +' at ' + x + ', '+ y;
+                           document.getElementById('info').innerHTML = msg;
+                           context.strokeRect(x/1.72 ,y/3.36, 1, 1);
+                         
+                           i++;
+             
+                          
+                           }, false);
+  
+  
+};
+</script>
+</body>
+
+
+</html>
